@@ -161,72 +161,98 @@
 
   /* ===== HERO ===== */
   .hero{
-    min-height:100svh;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
     text-align:center;
     position:relative;
-    padding:60px 24px 40px;
+    padding:26px 14px 8px;
+    background:radial-gradient(circle at 50% 0%, var(--ivory-deep), var(--ivory) 60%);
   }
-  .hero-frame{
-    position:absolute; inset:18px;
-    border:1px solid var(--line);
+  .hero-card{
+    position:relative;
+    width:100%;
+    max-width:440px;
+    background:var(--ivory);
+    border:1px solid var(--gold-light);
+    border-radius:clamp(60px, 26vw, 130px) clamp(60px, 26vw, 130px) 26px 26px;
+    box-shadow:0 24px 50px -26px rgba(37,57,44,.35);
+    padding:62px 26px 38px;
+    opacity:0;
+    animation: rise 1s ease .15s forwards;
+  }
+  .hero-decor{
+    position:absolute; top:10px; right:10px; width:120px; height:120px;
     pointer-events:none;
   }
-  .hero-frame::before, .hero-frame::after{
-    content:"";
-    position:absolute; width:34px; height:34px;
-    border:1px solid var(--gold);
+  .hero-controls{
+    position:absolute; top:18px; left:18px;
+    display:flex; gap:8px; z-index:5;
   }
-  .hero-frame::before{ top:-1px; right:-1px; border-left:none; border-bottom:none; }
-  .hero-frame::after{ bottom:-1px; left:-1px; border-right:none; border-top:none; }
+  .ctrl-btn{
+    width:38px; height:38px; border-radius:50%;
+    background:var(--ivory);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--green); cursor:pointer;
+    font-size:12px; font-weight:700; letter-spacing:.3px;
+    padding:0;
+    box-shadow:0 4px 10px -6px rgba(37,57,44,.3);
+  }
+  .ctrl-btn svg{ width:16px; height:16px; }
+  .ctrl-btn.is-muted .icon-on{ display:none; }
+  .ctrl-btn.is-muted .icon-off{ display:block !important; }
 
   .eyebrow{
     font-size:13px;
     letter-spacing:.5px;
-    color:var(--rose);
-    margin-bottom:18px;
-    opacity:0;
-    animation: rise .9s ease .1s forwards;
+    color:var(--gold);
+    margin-bottom:14px;
   }
   .hero h1{
     font-family:'Aref Ruqaa', serif;
     font-weight:700;
-    font-size:clamp(40px, 12vw, 60px);
-    line-height:1.35;
-    color:var(--green);
-    opacity:0;
-    animation: rise 1s ease .3s forwards;
+    font-size:clamp(34px, 11vw, 50px);
+    line-height:1.3;
   }
   .hero h1 .amp{
-    display:block;
-    font-size:.5em;
     color:var(--gold);
-    margin:2px 0;
+    margin:0 6px;
+    font-size:.75em;
   }
-  .hero .date-line{
-    margin-top:22px;
-    font-size:16px;
-    color:var(--text-soft);
-    letter-spacing:.3px;
-    opacity:0;
-    animation: rise 1s ease .55s forwards;
-  }
-  .hero .date-line b{ color:var(--green); font-weight:600; }
+  .hero h1 .groom-name{ color:var(--green); }
+  .hero h1 .bride-name{ color:var(--rose); }
 
-  .scroll-cue{
-    margin-top:48px;
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    color:var(--text-soft);
-    font-size:13px;
-    text-decoration:none;
-    opacity:0;
-    animation: rise 1s ease .8s forwards;
+  .hero-ayah{
+    margin:18px auto 0;
+    max-width:300px;
+    font-family:'Aref Ruqaa', serif;
+    font-size:14.5px;
+    line-height:2.05;
+    color:var(--green-soft);
   }
-  .scroll-cue span.arrow{
-    display:block;
-    animation: bob 2s ease-in-out infinite;
+
+  .rings-icon{ margin:22px auto 4px; display:block; }
+
+  .hero-invite{ margin-top:6px; }
+  .hero-invite .lead{ margin:0; font-size:15px; color:var(--green); }
+  .hero-invite .sub{ margin:6px auto 0; max-width:260px; font-size:13px; line-height:1.9; color:var(--text-soft); }
+
+  .details-pill{
+    display:inline-block;
+    margin-top:24px;
+    padding:9px 28px;
+    border:1px solid var(--gold);
+    border-radius:999px;
     color:var(--gold);
-    font-size:20px;
+    font-size:12.5px;
+    letter-spacing:.2px;
+    text-decoration:none;
+  }
+  .hero-chev{
+    display:block;
+    margin-top:16px;
+    color:var(--gold);
+    font-size:18px;
+    animation: bob 2s ease-in-out infinite;
   }
 
   @keyframes rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
@@ -248,6 +274,46 @@
     max-width:340px;
     margin:0 auto;
   }
+
+  /* ===== SECTION CARDS (visual separation between sections) ===== */
+  .wrap{ padding-top:6px; padding-bottom:6px; }
+  section.section-card{
+    position:relative;
+    padding:44px 26px;
+    margin:20px auto;
+    max-width:472px;
+    background:var(--ivory-deep);
+    border:1px solid var(--line);
+    border-radius:26px;
+    box-shadow:0 22px 46px -32px rgba(37,57,44,.32);
+    opacity:0;
+    transform:translateY(10px);
+    animation:cardIn .8s ease forwards;
+  }
+  @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
+  .wrap > section.section-card:first-of-type{ margin-top:4px; }
+  .card-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:18px;
+    color:var(--gold);
+  }
+  .card-icon .stem{ height:1px; width:34px; background:linear-gradient(to left, var(--line), transparent); }
+  .card-icon .stem.r{ background:linear-gradient(to right, var(--line), transparent); }
+
+  /* CLOSING as a distinct elevated finale card */
+  .closing.section-card{
+    background:linear-gradient(165deg, var(--green), var(--green-soft));
+    border:none;
+    box-shadow:0 26px 54px -30px rgba(37,57,44,.55);
+    padding:52px 26px;
+  }
+  .closing.section-card .heart-big{ color:var(--gold-light); }
+  .closing.section-card p.msg{ color:var(--ivory); }
+  .closing.section-card .names-small{ color:var(--gold-light); }
+  .closing.section-card .date-small{ color:rgba(251,247,239,.78); }
 
   /* ===== AYAH ===== */
   .ayah-box{
@@ -425,72 +491,132 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-frame"></div>
-  <div class="eyebrow">دعوة زفاف</div>
-  <h1>محمد جمال<span class="amp display">&</span>ريهام ماهر</h1>
-  <div class="date-line">الأربعاء <b>٣٠ سبتمبر ٢٠٢٦</b> — الساعة <b>٨:٣٠ مساءً</b></div>
-  <a href="#details" class="scroll-cue">
-    تفاصيل الدعوة
-    <span class="arrow">⌄</span>
-  </a>
+  <div class="hero-card">
+
+    <svg class="hero-decor" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+      <path d="M151 4 L76 86" stroke="var(--gold-light)" stroke-width="1"/>
+
+      <g fill="var(--green-soft)" opacity=".6">
+        <ellipse cx="140" cy="31" rx="16" ry="6.5" transform="rotate(38 140 31)"/>
+        <ellipse cx="121" cy="53" rx="14" ry="5.8" transform="rotate(52 121 53)"/>
+        <ellipse cx="103" cy="71" rx="12" ry="5" transform="rotate(60 103 71)"/>
+        <ellipse cx="131" cy="12" rx="10" ry="4.2" transform="rotate(10 131 12)"/>
+        <ellipse cx="90" cy="80" rx="9" ry="3.8" transform="rotate(70 90 80)"/>
+      </g>
+
+      <!-- large blossom -->
+      <g transform="translate(129 21)">
+        <g fill="var(--ivory)" stroke="var(--gold-light)" stroke-width=".6">
+          <ellipse cx="0" cy="-10" rx="6" ry="9"/>
+          <ellipse cx="0" cy="-10" rx="6" ry="9" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-10" rx="6" ry="9" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-10" rx="6" ry="9" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-10" rx="6" ry="9" transform="rotate(288)"/>
+        </g>
+        <circle r="3.2" fill="var(--gold)"/>
+      </g>
+
+      <!-- medium blossom -->
+      <g transform="translate(107 48)">
+        <g fill="var(--ivory)" stroke="var(--gold-light)" stroke-width=".55">
+          <ellipse cx="0" cy="-8" rx="4.6" ry="7"/>
+          <ellipse cx="0" cy="-8" rx="4.6" ry="7" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-8" rx="4.6" ry="7" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-8" rx="4.6" ry="7" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-8" rx="4.6" ry="7" transform="rotate(288)"/>
+        </g>
+        <circle r="2.4" fill="var(--gold)"/>
+      </g>
+
+      <!-- small bud -->
+      <g transform="translate(93 67)">
+        <ellipse cx="0" cy="-3" rx="3.6" ry="5" fill="var(--ivory)" stroke="var(--gold-light)" stroke-width=".5"/>
+        <ellipse cx="-3" cy="0" rx="3" ry="4.4" transform="rotate(-30 -3 0)" fill="var(--ivory)" stroke="var(--gold-light)" stroke-width=".5"/>
+        <circle r="1.6" fill="var(--gold)"/>
+      </g>
+    </svg>
+
+    <div class="hero-controls">
+      <button id="hero-music-toggle" class="ctrl-btn" aria-label="تشغيل / إيقاف الموسيقى" type="button">
+        <svg class="icon-on" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.6 12a3.6 3.6 0 0 0-1.9-3.15v6.3A3.6 3.6 0 0 0 16.6 12z"/></svg>
+        <svg class="icon-off" viewBox="0 0 24 24" style="display:none"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </button>
+      <button id="hero-lang-toggle" class="ctrl-btn" aria-label="English" type="button">EN</button>
+    </div>
+
+    <div class="eyebrow" data-ar="دعوة زفاف" data-en="Wedding Invitation">دعوة زفاف</div>
+
+    <div class="flourish center"><div class="stem"></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7.5-4.6-10-9.3C.5 7.9 3 4 7 4c2.2 0 4 1.3 5 3 1-1.7 2.8-3 5-3 4 0 6.5 3.9 5 7.7C19.5 16.4 12 21 12 21z"/></svg><div class="stem"></div></div>
+
+    <h1><span class="groom-name">محمد</span><span class="amp">&</span><span class="bride-name">ريهام</span></h1>
+
+    <p class="hero-ayah">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+
+    <svg class="rings-icon" width="52" height="32" viewBox="0 0 64 40" fill="none" stroke="var(--gold)" stroke-width="2.1" aria-hidden="true">
+      <circle cx="24" cy="20" r="14"/>
+      <circle cx="40" cy="20" r="14"/>
+    </svg>
+
+    <div class="hero-invite">
+      <p class="lead" data-ar="يتشرفان بدعوتكم" data-en="Together with their families">يتشرفان بدعوتكم</p>
+      <p class="sub" data-ar="لمشاركتنا فرحة العمر وحضور حفل زفافنا" data-en="request the pleasure of your company at their wedding">لمشاركتنا فرحة العمر وحضور حفل زفافنا</p>
+    </div>
+
+    <a href="#details" class="details-pill" data-ar="تفاصيل الدعوة" data-en="Details">تفاصيل الدعوة</a>
+    <span class="hero-chev">⌄</span>
+
+  </div>
 </section>
 
 <div class="wrap">
 
-  <!-- AYAH -->
-  <section class="ayah-box">
-    <p>وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً إِنَّ فِي ذَلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ</p>
-  </section>
-
-  <div class="flourish center"><div class="stem"></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7.5-4.6-10-9.3C.5 7.9 3 4 7 4c2.2 0 4 1.3 5 3 1-1.7 2.8-3 5-3 4 0 6.5 3.9 5 7.7C19.5 16.4 12 21 12 21z"/></svg><div class="stem"></div></div>
-
   <!-- COUPLE -->
-  <section style="padding-top:0;">
-    <div class="section-sub" style="margin-bottom:28px;">بكل الحب والفخر يتشرفان بدعوتكم</div>
+  <section class="section-card">
+    <div class="card-icon"><div class="stem"></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7.5-4.6-10-9.3C.5 7.9 3 4 7 4c2.2 0 4 1.3 5 3 1-1.7 2.8-3 5-3 4 0 6.5 3.9 5 7.7C19.5 16.4 12 21 12 21z"/></svg><div class="stem r"></div></div>
+    <div class="section-sub" style="margin-bottom:28px;" data-ar="بكل الحب والفخر يتشرفان بدعوتكم" data-en="With love and pride, they invite you to share their joy">بكل الحب والفخر يتشرفان بدعوتكم</div>
     <div class="couple">
       <div class="person">
-        <div class="role">العريس</div>
-        <div class="name">محمد جمال</div>
+        <div class="role" data-ar="العريس" data-en="Groom">العريس</div>
+        <div class="name" data-ar="محمد جمال" data-en="Mohamed Gamal">محمد جمال</div>
       </div>
       <div class="heart">♡</div>
       <div class="person">
-        <div class="role">العروس</div>
-        <div class="name">ريهام ماهر</div>
+        <div class="role" data-ar="العروس" data-en="Bride">العروس</div>
+        <div class="name" data-ar="ريهام ماهر" data-en="Reham Maher">ريهام ماهر</div>
       </div>
     </div>
   </section>
 
-  <div class="flourish center"><div class="stem"></div><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg><div class="stem"></div></div>
-
   <!-- PARENTS -->
-  <section style="padding-top:0;">
+  <section class="section-card">
+    <div class="card-icon"><div class="stem"></div><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg><div class="stem r"></div></div>
     <div class="parents">
       <div>
-        <div class="p-role">والد العريس<br>الحاج</div>
-        <div class="p-name">جمال شلبي</div>
+        <div class="p-role" data-ar="والد العريس<br>الحاج" data-en="Groom's Father<br>Al-Hajj">والد العريس<br>الحاج</div>
+        <div class="p-name" data-ar="جمال شلبي" data-en="Gamal Shalaby">جمال شلبي</div>
       </div>
       <div>
-        <div class="p-role">والد العروسة<br>الحاج</div>
-        <div class="p-name">سعيد محمد</div>
+        <div class="p-role" data-ar="والد العروسة<br>الحاج" data-en="Bride's Father<br>Al-Hajj">والد العروسة<br>الحاج</div>
+        <div class="p-name" data-ar="ماهر محمد" data-en="Maher Mohamed">ماهر محمد</div>
       </div>
     </div>
   </section>
 
   <!-- COUNTDOWN -->
-  <section>
-    <div class="section-title">العد التنازلي لليلة العمر</div>
+  <section class="section-card">
+    <div class="section-title" data-ar="العد التنازلي لليلة العمر" data-en="Countdown to the Big Night">العد التنازلي لليلة العمر</div>
     <div style="height:26px;"></div>
     <div class="countdown">
-      <div class="cd-box"><div class="cd-num" id="cd-days">00</div><div class="cd-label">يوم</div></div>
-      <div class="cd-box"><div class="cd-num" id="cd-hours">00</div><div class="cd-label">ساعة</div></div>
-      <div class="cd-box"><div class="cd-num" id="cd-mins">00</div><div class="cd-label">دقيقة</div></div>
-      <div class="cd-box"><div class="cd-num" id="cd-secs">00</div><div class="cd-label">ثانية</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-days">00</div><div class="cd-label" data-ar="يوم" data-en="Days">يوم</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-hours">00</div><div class="cd-label" data-ar="ساعة" data-en="Hours">ساعة</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-mins">00</div><div class="cd-label" data-ar="دقيقة" data-en="Minutes">دقيقة</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-secs">00</div><div class="cd-label" data-ar="ثانية" data-en="Seconds">ثانية</div></div>
     </div>
   </section>
 
   <!-- DETAILS -->
-  <section id="details">
-    <div class="section-title">تفاصيل الحفل</div>
+  <section id="details" class="section-card">
+    <div class="section-title" data-ar="تفاصيل الحفل" data-en="Event Details">تفاصيل الحفل</div>
     <div style="height:24px;"></div>
 
     <div class="detail-row">
@@ -498,8 +624,8 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
       </div>
       <div class="detail-text">
-        <div class="label">التاريخ</div>
-        <div class="value">الأربعاء، ٣٠ سبتمبر ٢٠٢٦</div>
+        <div class="label" data-ar="التاريخ" data-en="Date">التاريخ</div>
+        <div class="value" data-ar="الأربعاء، ٣٠ سبتمبر ٢٠٢٦" data-en="Wednesday, September 30, 2026">الأربعاء، ٣٠ سبتمبر ٢٠٢٦</div>
       </div>
     </div>
 
@@ -508,8 +634,8 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
       </div>
       <div class="detail-text">
-        <div class="label">الوقت</div>
-        <div class="value">الساعة ٨:٣٠ مساءً</div>
+        <div class="label" data-ar="الوقت" data-en="Time">الوقت</div>
+        <div class="value" data-ar="الساعة ٨:٣٠ مساءً" data-en="8:30 PM">الساعة ٨:٣٠ مساءً</div>
       </div>
     </div>
 
@@ -518,66 +644,66 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-11.5A7 7 0 105 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
       </div>
       <div class="detail-text">
-        <div class="label">المكان</div>
+        <div class="label" data-ar="المكان" data-en="Venue">المكان</div>
         <div class="value">EROS Wedding Hall</div>
       </div>
     </div>
   </section>
 
   <!-- LOCATION -->
-  <section>
-    <div class="section-title">الوصول إلى مكان الحفل</div>
-    <div class="section-sub">يمكنكم فتح الموقع مباشرة على خرائط Google للوصول بسهولة</div>
+  <section class="section-card">
+    <div class="section-title" data-ar="الوصول إلى مكان الحفل" data-en="Getting to the Venue">الوصول إلى مكان الحفل</div>
+    <div class="section-sub" data-ar="يمكنكم فتح الموقع مباشرة على خرائط Google للوصول بسهولة" data-en="You can open the location directly on Google Maps for easy access">يمكنكم فتح الموقع مباشرة على خرائط Google للوصول بسهولة</div>
     <div class="btn-row">
       <a class="btn solid" href="https://maps.app.goo.gl/1kpu86p2bEz5xtjC7?g_st=ic" target="_blank" rel="noopener">
-        فتح الموقع على الخريطة
+        <span data-ar="فتح الموقع على الخريطة" data-en="Open in Google Maps">فتح الموقع على الخريطة</span>
       </a>
     </div>
   </section>
 
   <!-- CALENDAR -->
-  <section>
-    <div class="section-title">لا تنسوا الموعد</div>
-    <div class="section-sub">أضيفوا ليلة الفرح إلى تقويمكم حتى لا تفوتكم</div>
+  <section class="section-card">
+    <div class="section-title" data-ar="لا تنسوا الموعد" data-en="Don't Miss the Date">لا تنسوا الموعد</div>
+    <div class="section-sub" data-ar="أضيفوا ليلة الفرح إلى تقويمكم حتى لا تفوتكم" data-en="Add the wedding night to your calendar so you don't miss it">أضيفوا ليلة الفرح إلى تقويمكم حتى لا تفوتكم</div>
     <div class="btn-row">
       <a class="btn gold" id="calendar-btn" href="#" target="_blank" rel="noopener">
-        إضافة إلى التقويم
+        <span data-ar="إضافة إلى التقويم" data-en="Add to Calendar">إضافة إلى التقويم</span>
       </a>
     </div>
   </section>
 
   <!-- SHARE -->
-  <section>
-    <div class="section-title">شاركوا فرحتنا</div>
-    <div class="section-sub">شاركوا الدعوة مع الأهل والأصدقاء</div>
+  <section class="section-card">
+    <div class="section-title" data-ar="شاركوا فرحتنا" data-en="Share Our Joy">شاركوا فرحتنا</div>
+    <div class="section-sub" data-ar="شاركوا الدعوة مع الأهل والأصدقاء" data-en="Share the invitation with family and friends">شاركوا الدعوة مع الأهل والأصدقاء</div>
     <div class="share-grid">
       <a class="share-item" id="share-whatsapp" href="#" target="_blank" rel="noopener">
         <span class="share-circle">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5 0-.1-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.2 1.8 2.8 4.4 3.8.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.1-.5-.2z"/><path d="M12 2a10 10 0 00-8.7 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 1112 20z"/></svg>
         </span>
-        واتساب
+        <span data-ar="واتساب" data-en="WhatsApp">واتساب</span>
       </a>
       <a class="share-item" id="share-copy" href="javascript:void(0)">
         <span class="share-circle">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="12" height="12" rx="1.5"/><path d="M5 15V4.5A1.5 1.5 0 016.5 3H15"/></svg>
         </span>
-        نسخ التفاصيل
+        <span data-ar="نسخ التفاصيل" data-en="Copy Details">نسخ التفاصيل</span>
       </a>
     </div>
     <div class="copy-note" id="copy-note"></div>
   </section>
 
   <!-- CLOSING -->
-  <div class="closing">
+  <section class="closing section-card">
     <div class="heart-big">♡</div>
-    <p class="msg">وجودكم يتمم فرحتنا<br>ننتظركم بكل الحب في ليلة لا تكتمل إلا بحضوركم</p>
-    <div class="names-small">محمد ♡ ريهام</div>
-    <div class="date-small">٣٠ سبتمبر ٢٠٢٦ — الساعة ٨:٣٠ مساءً</div>
-  </div>
+    <p class="msg" data-ar="وجودكم يتمم فرحتنا<br>ننتظركم بكل الحب في ليلة لا تكتمل إلا بحضوركم" data-en="Your presence completes our joy<br>We await you with love on a night that isn't complete without you">وجودكم يتمم فرحتنا<br>ننتظركم بكل الحب في ليلة لا تكتمل إلا بحضوركم</p>
+    <div class="names-small" data-ar="محمد ♡ ريهام" data-en="Mohamed ♡ Reham">محمد ♡ ريهام</div>
+    <div class="date-small" data-ar="٣٠ سبتمبر ٢٠٢٦ — الساعة ٨:٣٠ مساءً" data-en="September 30, 2026 — 8:30 PM">٣٠ سبتمبر ٢٠٢٦ — الساعة ٨:٣٠ مساءً</div>
+  </section>
 
 </div>
 
-<footer>مع أطيب التمنيات بحياة مليئة بالحب والسعادة</footer>
+<footer data-ar="مع أطيب التمنيات بحياة مليئة بالحب والسعادة" data-en="With best wishes for a life full of love and happiness">مع أطيب التمنيات بحياة مليئة بالحب والسعادة</footer>
 
 </div>
 
@@ -593,12 +719,26 @@
   function unmuteMusic(){
     if(!music) return;
     music.muted = false;
+    music.volume = 1;
     var p = music.play();
-    if(p && p.catch){ p.catch(function(){}); }
+    if(p && p.catch){
+      p.catch(function(){
+        // one retry — some mobile browsers need a second nudge
+        setTimeout(function(){
+          music.muted = false;
+          music.play().catch(function(){});
+        }, 50);
+      });
+    }
   }
 
   envelope.addEventListener("click", function(){
     if(envelope.classList.contains("open")) return;
+
+    // 0. unmute + play immediately — must be the first thing that runs
+    //    inside the tap handler so iOS Safari still counts it as
+    //    triggered directly by the user's gesture.
+    unmuteMusic();
 
     // 1. flap opens, seal shrinks
     envelope.classList.add("open");
@@ -607,8 +747,6 @@
     setTimeout(function(){
       cover.classList.add("burst-active");
     }, 220);
-
-    unmuteMusic(); // music starts right here, together with the envelope opening
 
     // 3. once the burst has covered the screen, swap in the real content
     setTimeout(function(){
@@ -622,6 +760,34 @@
       cover.classList.add("hidden");
     }, 1150);
   });
+
+  // ---- Hero card: music mute toggle ----
+  var heroMusicBtn = document.getElementById("hero-music-toggle");
+  if(heroMusicBtn){
+    heroMusicBtn.addEventListener("click", function(){
+      if(!music) return;
+      music.muted = !music.muted;
+      heroMusicBtn.classList.toggle("is-muted", music.muted);
+      if(!music.muted){
+        var p = music.play();
+        if(p && p.catch){ p.catch(function(){}); }
+      }
+    });
+  }
+
+  // ---- Hero card: EN / AR label toggle (translates the hero card text only) ----
+  var heroLangBtn = document.getElementById("hero-lang-toggle");
+  window.isEnglishMode = false;
+  if(heroLangBtn){
+    heroLangBtn.addEventListener("click", function(){
+      var toEnglish = heroLangBtn.textContent.trim() === "EN";
+      heroLangBtn.textContent = toEnglish ? "AR" : "EN";
+      window.isEnglishMode = toEnglish;
+      document.querySelectorAll("[data-ar]").forEach(function(el){
+        el.innerHTML = toEnglish ? el.getAttribute("data-en") : el.getAttribute("data-ar");
+      });
+    });
+  }
 </script>
 
 <script>
@@ -678,16 +844,17 @@
       try{ document.execCommand("copy"); }catch(e){}
       document.body.removeChild(ta);
     }
+    var confirmMsg = window.isEnglishMode ? "Invitation details copied ✓" : "تم نسخ تفاصيل الدعوة ✓";
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(copyText).then(function(){
-        note.textContent = "تم نسخ تفاصيل الدعوة ✓";
+        note.textContent = confirmMsg;
       }).catch(function(){
         fallbackCopy(copyText);
-        note.textContent = "تم نسخ تفاصيل الدعوة ✓";
+        note.textContent = confirmMsg;
       });
     } else {
       fallbackCopy(copyText);
-      note.textContent = "تم نسخ تفاصيل الدعوة ✓";
+      note.textContent = confirmMsg;
     }
     setTimeout(function(){ note.textContent = ""; }, 2500);
   });
