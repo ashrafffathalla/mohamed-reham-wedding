@@ -100,7 +100,7 @@
     width:64px; height:64px; border-radius:50%;
     background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 75%);
     display:flex; align-items:center; justify-content:center;
-    color:var(--ivory); z-index:4;
+    color:#FFFFFF; z-index:4;
     box-shadow:0 3px 10px rgba(37,57,44,.18);
     transition:transform .35s ease, opacity .35s ease;
   }
@@ -589,6 +589,14 @@
   var music = document.getElementById("bg-music");
   if(music){ music.play().catch(function(){}); } // belt-and-braces alongside the autoplay attribute
 
+  // The music starts (unmuted) at the exact moment the envelope begins opening.
+  function unmuteMusic(){
+    if(!music) return;
+    music.muted = false;
+    var p = music.play();
+    if(p && p.catch){ p.catch(function(){}); }
+  }
+
   envelope.addEventListener("click", function(){
     if(envelope.classList.contains("open")) return;
 
@@ -600,10 +608,7 @@
       cover.classList.add("burst-active");
     }, 220);
 
-    // unmute the music on the same user gesture (it's already autoplaying muted,
-    // so this just turns the sound on — far more reliable in in-app browsers
-    // like WhatsApp/Instagram/Messenger than starting playback from scratch)
-    unmuteMusic();
+    unmuteMusic(); // music starts right here, together with the envelope opening
 
     // 3. once the burst has covered the screen, swap in the real content
     setTimeout(function(){
@@ -617,28 +622,6 @@
       cover.classList.add("hidden");
     }, 1150);
   });
-
-  // ---- Music: starts autoplaying muted on page load (allowed everywhere),
-  // then gets unmuted on the envelope tap. If the browser still blocked the
-  // autoplay entirely, this also tries a normal play() and silently retries
-  // on the very next tap anywhere on the page — no visible UI either way. ----
-  function unmuteMusic(){
-    if(!music) return;
-    music.muted = false;
-    var p = music.play();
-    if(p && p.catch){
-      p.catch(function(){
-        var retry = function(){
-          music.muted = false;
-          music.play().catch(function(){});
-          document.removeEventListener("pointerdown", retry);
-          document.removeEventListener("touchend", retry);
-        };
-        document.addEventListener("pointerdown", retry, { once:true });
-        document.addEventListener("touchend", retry, { once:true });
-      });
-    }
-  }
 </script>
 
 <script>
