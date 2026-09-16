@@ -303,6 +303,41 @@
   .card-icon .stem{ height:1px; width:34px; background:linear-gradient(to left, var(--line), transparent); }
   .card-icon .stem.r{ background:linear-gradient(to right, var(--line), transparent); }
 
+  /* ===== VIDEO ===== */
+  .video-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    border-radius:20px;
+    overflow:hidden;
+    background:#111;
+    box-shadow:0 16px 34px -18px rgba(37,57,44,.45);
+    border:1px solid var(--gold-light);
+  }
+  .video-wrap video{
+    width:100%; height:100%; object-fit:cover; display:block; background:#111;
+  }
+  .video-play-btn{
+    position:absolute; inset:0; margin:auto; width:62px; height:62px;
+    border-radius:50%;
+    background:rgba(251,247,239,.94);
+    border:1px solid var(--gold-light);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--green);
+    cursor:pointer;
+    box-shadow:0 12px 26px -10px rgba(0,0,0,.55);
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .video-play-btn svg{ margin-right:-3px; }
+  .video-wrap.started .video-play-btn{ opacity:0; pointer-events:none; transform:scale(.8); }
+  .video-wrap::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,0) 30%);
+    pointer-events:none;
+  }
+  .video-wrap.started::after{ display:none; }
+
   /* CLOSING as a distinct elevated finale card */
   .closing.section-card{
     background:linear-gradient(165deg, var(--green), var(--green-soft));
@@ -602,6 +637,22 @@
     </div>
   </section>
 
+  <!-- VIDEO -->
+  <section class="section-card video-card">
+    <div class="card-icon"><div class="stem"></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="13" height="12" rx="2"/><path d="M15.5 10.5L21 7v10l-5.5-3.5"/></svg><div class="stem r"></div></div>
+    <div class="section-title" data-ar="لحظات من فرحتنا" data-en="Moments of Our Joy">لحظات من فرحتنا</div>
+    <div class="section-sub" data-ar="شاهدوا هذا الفيديو الخاص قبل يوم الزفاف" data-en="Watch this special video before the wedding day">شاهدوا هذا الفيديو الخاص قبل يوم الزفاف</div>
+    <div style="height:22px;"></div>
+    <div class="video-wrap" id="video-wrap">
+      <video id="proposal-video" playsinline preload="metadata" poster="video-poster.jpg" controls>
+        <source src="proposal-video.mp4" type="video/mp4">
+      </video>
+      <button class="video-play-btn" id="video-play-btn" type="button" aria-label="Play video">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </div>
+  </section>
+
   <!-- COUNTDOWN -->
   <section class="section-card">
     <div class="section-title" data-ar="العد التنازلي لليلة العمر" data-en="Countdown to the Big Night">العد التنازلي لليلة العمر</div>
@@ -714,6 +765,46 @@
   var content = document.getElementById("content");
   var music = document.getElementById("bg-music");
   if(music){ music.play().catch(function(){}); } // belt-and-braces alongside the autoplay attribute
+
+  // ----- VIDEO SECTION: video takes over sound, music ducks out -----
+  (function(){
+    var vwrap = document.getElementById("video-wrap");
+    var vid = document.getElementById("proposal-video");
+    var playBtn = document.getElementById("video-play-btn");
+    if(!vid || !vwrap || !playBtn) return;
+
+    playBtn.addEventListener("click", function(){
+      if(music && !music.paused){ music.pause(); }
+      vid.play();
+    });
+
+    vid.addEventListener("play", function(){
+      vwrap.classList.add("started");
+      if(music && !music.paused){ music.pause(); }
+    });
+
+    vid.addEventListener("ended", function(){
+      // hand the sound back to the background music once the video is done
+      if(music && music.muted === false){ music.play().catch(function(){}); }
+    });
+  })();
+
+  // ----- Stop the music when the tab/app goes to the background -----
+  (function(){
+    if(!music) return;
+    var wasPlaying = false;
+    document.addEventListener("visibilitychange", function(){
+      var vid = document.getElementById("proposal-video");
+      if(document.hidden){
+        wasPlaying = !music.paused;
+        music.pause();
+      } else if(wasPlaying && (!vid || vid.paused)){
+        music.play().catch(function(){});
+        wasPlaying = false;
+      }
+    });
+    window.addEventListener("pagehide", function(){ music.pause(); });
+  })();
 
   // The music starts (unmuted) at the exact moment the envelope begins opening.
   function unmuteMusic(){
